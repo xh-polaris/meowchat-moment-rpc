@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package moment;
+
+option go_package='./pb';
+
+message UserPreview {
+  string id = 1;
+  string nickname = 2;
+  string avatarUrl = 3;
+}
+
+message Moment {
+  string id = 1;
+  int64 createAt = 2;
+  string catId = 3;
+  repeated string pictures = 4; // 图片url
+  string title = 5;
+  string text = 6;
+  int64 likes = 7; // 点赞数
+  UserPreview user = 8;
+}
+
+message GetManyMomentReq {
+  oneof req { // 可扩展筛选条件
+    string momentId = 1;
+    string communityId = 2;
+  }
+  int64 count = 3; // 获取的数量
+}
+
+message GetManyMomentResp {
+  repeated Moment moments = 1;
+}
+
+message GetMomentReq {
+  string communityId = 1;
+}
+
+message GetMomentResp {
+  Moment moment = 1;
+}
+
+message AddMomentReq {
+  Moment moment = 1;
+}
+
+message AddMomentResp {
+  string momentId = 1;
+}
+
+message UpdateMomentReq {
+  Moment moment = 1;
+}
+
+message UpdateMomentResp {
+}
+
+message DeleteMomentReq {
+  string momentId = 1;
+}
+
+message DeleteMomentResp {
+}
+
+service moment {
+  rpc GetManyMoment(GetManyMomentReq) returns (GetManyMomentResp);
+  rpc GetMoment(GetMomentReq) returns (GetMomentResp);
+  rpc AddMoment(AddMomentReq) returns (AddMomentResp);
+  rpc UpdateMoment(UpdateMomentReq) returns (UpdateMomentResp);
+  rpc DeleteMoment(DeleteMomentReq) returns (DeleteMomentResp);
+}
