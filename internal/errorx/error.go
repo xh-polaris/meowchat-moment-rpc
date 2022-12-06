@@ -3,5 +3,5 @@ package errorx
 import "google.golang.org/grpc/status"
 
 var (
-	ErrNoSuchMoment = status.New(1001, "no such moment")
+	ErrNoSuchMoment = status.New(10001, "no such moment")
 )

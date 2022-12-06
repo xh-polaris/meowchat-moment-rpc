@@ -4,7 +4,7 @@ package moment;
 
 option go_package='./pb';
 
-message UserPreview {
+message User {
   string id = 1;
   string nickname = 2;
   string avatarUrl = 3;
@@ -18,15 +18,12 @@ message Moment {
   string title = 5;
   string text = 6;
   int64 likes = 7; // 点赞数
-  UserPreview user = 8;
+  User user = 8;
 }
 
 message GetManyMomentReq {
-  oneof req { // 可扩展筛选条件
-    string momentId = 1;
-    string communityId = 2;
-  }
-  int64 count = 3; // 获取的数量
+  string communityId = 1;
+  int64 count = 2; // 获取的数量
 }
 
 message GetManyMomentResp {

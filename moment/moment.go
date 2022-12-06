@@ -24,7 +24,7 @@ type (
 	Moment            = pb.Moment
 	UpdateMomentReq   = pb.UpdateMomentReq
 	UpdateMomentResp  = pb.UpdateMomentResp
-	UserPreview       = pb.UserPreview
+	User              = pb.User
 
 	Moment interface {
 		GetManyMoment(ctx context.Context, in *GetManyMomentReq, opts ...grpc.CallOption) (*GetManyMomentResp, error)
