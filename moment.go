@@ -1,8 +1,10 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
+	"github.com/zeromicro/go-zero/core/logx"
 
 	"github.com/xh-polaris/meowchat-moment-rpc/internal/config"
 	"github.com/xh-polaris/meowchat-moment-rpc/internal/server"
@@ -26,11 +28,19 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		pb.RegisterMomentServer(grpcServer, server.NewMomentServer(ctx))
+		pb.RegisterMomentRpcServer(grpcServer, server.NewMomentRpcServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)
 		}
+	})
+	s.AddUnaryInterceptors(func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
+		data, err := handler(ctx, req)
+		if err != nil {
+			logx.Errorf("%s - %s", info.FullMethod, err)
+			return nil, err
+		}
+		return data, nil
 	})
 	defer s.Stop()
 

@@ -24,7 +24,9 @@ func NewDeleteMomentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Dele
 }
 
 func (l *DeleteMomentLogic) DeleteMoment(in *pb.DeleteMomentReq) (*pb.DeleteMomentResp, error) {
-	// todo: add your logic here and delete this line
-
+	err := l.svcCtx.MomentModel.DeleteSoftly(l.ctx, in.MomentId)
+	if err != nil {
+		return nil, err
+	}
 	return &pb.DeleteMomentResp{}, nil
 }

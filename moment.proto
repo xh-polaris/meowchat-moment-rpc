@@ -4,45 +4,40 @@ package moment;
 
 option go_package='./pb';
 
-message User {
-  string id = 1;
-  string nickname = 2;
-  string avatarUrl = 3;
-}
-
 message Moment {
   string id = 1;
   int64 createAt = 2;
   string catId = 3;
-  repeated string pictures = 4; // 图片url
+  repeated string photos = 4; // 图片url
   string title = 5;
   string text = 6;
-  int64 likes = 7; // 点赞数
-  User user = 8;
+  string communityId = 7;
+  string userId = 8;
 }
 
-message GetManyMomentReq {
+message ListMomentReq {
   string communityId = 1;
   int64 count = 2; // 获取的数量
+  int64 skip = 3;
 }
 
-message GetManyMomentResp {
+message ListMomentResp {
   repeated Moment moments = 1;
 }
 
-message GetMomentReq {
-  string communityId = 1;
+message RetrieveMomentReq {
+  string momentId = 1;
 }
 
-message GetMomentResp {
+message RetrieveMomentResp {
   Moment moment = 1;
 }
 
-message AddMomentReq {
+message CreateMomentReq {
   Moment moment = 1;
 }
 
-message AddMomentResp {
+message CreateMomentResp {
   string momentId = 1;
 }
 
@@ -60,10 +55,10 @@ message DeleteMomentReq {
 message DeleteMomentResp {
 }
 
-service moment {
-  rpc GetManyMoment(GetManyMomentReq) returns (GetManyMomentResp);
-  rpc GetMoment(GetMomentReq) returns (GetMomentResp);
-  rpc AddMoment(AddMomentReq) returns (AddMomentResp);
+service moment_rpc {
+  rpc ListMoment(ListMomentReq) returns (ListMomentResp);
+  rpc RetrieveMoment(RetrieveMomentReq) returns (RetrieveMomentResp);
+  rpc CreateMoment(CreateMomentReq) returns (CreateMomentResp);
   rpc UpdateMoment(UpdateMomentReq) returns (UpdateMomentResp);
   rpc DeleteMoment(DeleteMomentReq) returns (DeleteMomentResp);
 }

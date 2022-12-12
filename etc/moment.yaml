@@ -1,6 +1,11 @@
 Name: moment.rpc
 ListenOn: 0.0.0.0:8080
-Etcd:
-  Hosts:
-  - 127.0.0.1:2379
-  Key: moment.rpc
+Mode: dev
+Log:
+  Encoding: plain
+  Level: debug
+Mongo:
+  URL: $MONGO_URL
+  DB: $MONGO_DB
+Cache:
+  - Host: $CACHE_HOST

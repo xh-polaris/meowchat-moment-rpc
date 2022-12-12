@@ -18,230 +18,230 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// MomentClient is the client API for Moment service.
+// MomentRpcClient is the client API for MomentRpc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type MomentClient interface {
-	GetManyMoment(ctx context.Context, in *GetManyMomentReq, opts ...grpc.CallOption) (*GetManyMomentResp, error)
-	GetMoment(ctx context.Context, in *GetMomentReq, opts ...grpc.CallOption) (*GetMomentResp, error)
-	AddMoment(ctx context.Context, in *AddMomentReq, opts ...grpc.CallOption) (*AddMomentResp, error)
+type MomentRpcClient interface {
+	ListMoment(ctx context.Context, in *ListMomentReq, opts ...grpc.CallOption) (*ListMomentResp, error)
+	RetrieveMoment(ctx context.Context, in *RetrieveMomentReq, opts ...grpc.CallOption) (*RetrieveMomentResp, error)
+	CreateMoment(ctx context.Context, in *CreateMomentReq, opts ...grpc.CallOption) (*CreateMomentResp, error)
 	UpdateMoment(ctx context.Context, in *UpdateMomentReq, opts ...grpc.CallOption) (*UpdateMomentResp, error)
 	DeleteMoment(ctx context.Context, in *DeleteMomentReq, opts ...grpc.CallOption) (*DeleteMomentResp, error)
 }
 
-type momentClient struct {
+type momentRpcClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewMomentClient(cc grpc.ClientConnInterface) MomentClient {
-	return &momentClient{cc}
+func NewMomentRpcClient(cc grpc.ClientConnInterface) MomentRpcClient {
+	return &momentRpcClient{cc}
 }
 
-func (c *momentClient) GetManyMoment(ctx context.Context, in *GetManyMomentReq, opts ...grpc.CallOption) (*GetManyMomentResp, error) {
-	out := new(GetManyMomentResp)
-	err := c.cc.Invoke(ctx, "/moment.moment/GetManyMoment", in, out, opts...)
+func (c *momentRpcClient) ListMoment(ctx context.Context, in *ListMomentReq, opts ...grpc.CallOption) (*ListMomentResp, error) {
+	out := new(ListMomentResp)
+	err := c.cc.Invoke(ctx, "/moment.moment_rpc/ListMoment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *momentClient) GetMoment(ctx context.Context, in *GetMomentReq, opts ...grpc.CallOption) (*GetMomentResp, error) {
-	out := new(GetMomentResp)
-	err := c.cc.Invoke(ctx, "/moment.moment/GetMoment", in, out, opts...)
+func (c *momentRpcClient) RetrieveMoment(ctx context.Context, in *RetrieveMomentReq, opts ...grpc.CallOption) (*RetrieveMomentResp, error) {
+	out := new(RetrieveMomentResp)
+	err := c.cc.Invoke(ctx, "/moment.moment_rpc/RetrieveMoment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *momentClient) AddMoment(ctx context.Context, in *AddMomentReq, opts ...grpc.CallOption) (*AddMomentResp, error) {
-	out := new(AddMomentResp)
-	err := c.cc.Invoke(ctx, "/moment.moment/AddMoment", in, out, opts...)
+func (c *momentRpcClient) CreateMoment(ctx context.Context, in *CreateMomentReq, opts ...grpc.CallOption) (*CreateMomentResp, error) {
+	out := new(CreateMomentResp)
+	err := c.cc.Invoke(ctx, "/moment.moment_rpc/CreateMoment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *momentClient) UpdateMoment(ctx context.Context, in *UpdateMomentReq, opts ...grpc.CallOption) (*UpdateMomentResp, error) {
+func (c *momentRpcClient) UpdateMoment(ctx context.Context, in *UpdateMomentReq, opts ...grpc.CallOption) (*UpdateMomentResp, error) {
 	out := new(UpdateMomentResp)
-	err := c.cc.Invoke(ctx, "/moment.moment/UpdateMoment", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/moment.moment_rpc/UpdateMoment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *momentClient) DeleteMoment(ctx context.Context, in *DeleteMomentReq, opts ...grpc.CallOption) (*DeleteMomentResp, error) {
+func (c *momentRpcClient) DeleteMoment(ctx context.Context, in *DeleteMomentReq, opts ...grpc.CallOption) (*DeleteMomentResp, error) {
 	out := new(DeleteMomentResp)
-	err := c.cc.Invoke(ctx, "/moment.moment/DeleteMoment", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/moment.moment_rpc/DeleteMoment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// MomentServer is the server API for Moment service.
-// All implementations must embed UnimplementedMomentServer
+// MomentRpcServer is the server API for MomentRpc service.
+// All implementations must embed UnimplementedMomentRpcServer
 // for forward compatibility
-type MomentServer interface {
-	GetManyMoment(context.Context, *GetManyMomentReq) (*GetManyMomentResp, error)
-	GetMoment(context.Context, *GetMomentReq) (*GetMomentResp, error)
-	AddMoment(context.Context, *AddMomentReq) (*AddMomentResp, error)
+type MomentRpcServer interface {
+	ListMoment(context.Context, *ListMomentReq) (*ListMomentResp, error)
+	RetrieveMoment(context.Context, *RetrieveMomentReq) (*RetrieveMomentResp, error)
+	CreateMoment(context.Context, *CreateMomentReq) (*CreateMomentResp, error)
 	UpdateMoment(context.Context, *UpdateMomentReq) (*UpdateMomentResp, error)
 	DeleteMoment(context.Context, *DeleteMomentReq) (*DeleteMomentResp, error)
-	mustEmbedUnimplementedMomentServer()
+	mustEmbedUnimplementedMomentRpcServer()
 }
 
-// UnimplementedMomentServer must be embedded to have forward compatible implementations.
-type UnimplementedMomentServer struct {
+// UnimplementedMomentRpcServer must be embedded to have forward compatible implementations.
+type UnimplementedMomentRpcServer struct {
 }
 
-func (UnimplementedMomentServer) GetManyMoment(context.Context, *GetManyMomentReq) (*GetManyMomentResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetManyMoment not implemented")
+func (UnimplementedMomentRpcServer) ListMoment(context.Context, *ListMomentReq) (*ListMomentResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListMoment not implemented")
 }
-func (UnimplementedMomentServer) GetMoment(context.Context, *GetMomentReq) (*GetMomentResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMoment not implemented")
+func (UnimplementedMomentRpcServer) RetrieveMoment(context.Context, *RetrieveMomentReq) (*RetrieveMomentResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RetrieveMoment not implemented")
 }
-func (UnimplementedMomentServer) AddMoment(context.Context, *AddMomentReq) (*AddMomentResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddMoment not implemented")
+func (UnimplementedMomentRpcServer) CreateMoment(context.Context, *CreateMomentReq) (*CreateMomentResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateMoment not implemented")
 }
-func (UnimplementedMomentServer) UpdateMoment(context.Context, *UpdateMomentReq) (*UpdateMomentResp, error) {
+func (UnimplementedMomentRpcServer) UpdateMoment(context.Context, *UpdateMomentReq) (*UpdateMomentResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMoment not implemented")
 }
-func (UnimplementedMomentServer) DeleteMoment(context.Context, *DeleteMomentReq) (*DeleteMomentResp, error) {
+func (UnimplementedMomentRpcServer) DeleteMoment(context.Context, *DeleteMomentReq) (*DeleteMomentResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteMoment not implemented")
 }
-func (UnimplementedMomentServer) mustEmbedUnimplementedMomentServer() {}
+func (UnimplementedMomentRpcServer) mustEmbedUnimplementedMomentRpcServer() {}
 
-// UnsafeMomentServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to MomentServer will
+// UnsafeMomentRpcServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MomentRpcServer will
 // result in compilation errors.
-type UnsafeMomentServer interface {
-	mustEmbedUnimplementedMomentServer()
+type UnsafeMomentRpcServer interface {
+	mustEmbedUnimplementedMomentRpcServer()
 }
 
-func RegisterMomentServer(s grpc.ServiceRegistrar, srv MomentServer) {
-	s.RegisterService(&Moment_ServiceDesc, srv)
+func RegisterMomentRpcServer(s grpc.ServiceRegistrar, srv MomentRpcServer) {
+	s.RegisterService(&MomentRpc_ServiceDesc, srv)
 }
 
-func _Moment_GetManyMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetManyMomentReq)
+func _MomentRpc_ListMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMomentReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MomentServer).GetManyMoment(ctx, in)
+		return srv.(MomentRpcServer).ListMoment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/moment.moment/GetManyMoment",
+		FullMethod: "/moment.moment_rpc/ListMoment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MomentServer).GetManyMoment(ctx, req.(*GetManyMomentReq))
+		return srv.(MomentRpcServer).ListMoment(ctx, req.(*ListMomentReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Moment_GetMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetMomentReq)
+func _MomentRpc_RetrieveMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetrieveMomentReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MomentServer).GetMoment(ctx, in)
+		return srv.(MomentRpcServer).RetrieveMoment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/moment.moment/GetMoment",
+		FullMethod: "/moment.moment_rpc/RetrieveMoment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MomentServer).GetMoment(ctx, req.(*GetMomentReq))
+		return srv.(MomentRpcServer).RetrieveMoment(ctx, req.(*RetrieveMomentReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Moment_AddMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddMomentReq)
+func _MomentRpc_CreateMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateMomentReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MomentServer).AddMoment(ctx, in)
+		return srv.(MomentRpcServer).CreateMoment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/moment.moment/AddMoment",
+		FullMethod: "/moment.moment_rpc/CreateMoment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MomentServer).AddMoment(ctx, req.(*AddMomentReq))
+		return srv.(MomentRpcServer).CreateMoment(ctx, req.(*CreateMomentReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Moment_UpdateMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MomentRpc_UpdateMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateMomentReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MomentServer).UpdateMoment(ctx, in)
+		return srv.(MomentRpcServer).UpdateMoment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/moment.moment/UpdateMoment",
+		FullMethod: "/moment.moment_rpc/UpdateMoment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MomentServer).UpdateMoment(ctx, req.(*UpdateMomentReq))
+		return srv.(MomentRpcServer).UpdateMoment(ctx, req.(*UpdateMomentReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Moment_DeleteMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MomentRpc_DeleteMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteMomentReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MomentServer).DeleteMoment(ctx, in)
+		return srv.(MomentRpcServer).DeleteMoment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/moment.moment/DeleteMoment",
+		FullMethod: "/moment.moment_rpc/DeleteMoment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MomentServer).DeleteMoment(ctx, req.(*DeleteMomentReq))
+		return srv.(MomentRpcServer).DeleteMoment(ctx, req.(*DeleteMomentReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Moment_ServiceDesc is the grpc.ServiceDesc for Moment service.
+// MomentRpc_ServiceDesc is the grpc.ServiceDesc for MomentRpc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Moment_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "moment.moment",
-	HandlerType: (*MomentServer)(nil),
+var MomentRpc_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "moment.moment_rpc",
+	HandlerType: (*MomentRpcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetManyMoment",
-			Handler:    _Moment_GetManyMoment_Handler,
+			MethodName: "ListMoment",
+			Handler:    _MomentRpc_ListMoment_Handler,
 		},
 		{
-			MethodName: "GetMoment",
-			Handler:    _Moment_GetMoment_Handler,
+			MethodName: "RetrieveMoment",
+			Handler:    _MomentRpc_RetrieveMoment_Handler,
 		},
 		{
-			MethodName: "AddMoment",
-			Handler:    _Moment_AddMoment_Handler,
+			MethodName: "CreateMoment",
+			Handler:    _MomentRpc_CreateMoment_Handler,
 		},
 		{
 			MethodName: "UpdateMoment",
-			Handler:    _Moment_UpdateMoment_Handler,
+			Handler:    _MomentRpc_UpdateMoment_Handler,
 		},
 		{
 			MethodName: "DeleteMoment",
-			Handler:    _Moment_DeleteMoment_Handler,
+			Handler:    _MomentRpc_DeleteMoment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

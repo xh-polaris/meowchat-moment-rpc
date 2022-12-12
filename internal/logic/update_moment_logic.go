@@ -2,9 +2,11 @@ package logic
 
 import (
 	"context"
-
+	"github.com/xh-polaris/meowchat-moment-rpc/errorx"
+	"github.com/xh-polaris/meowchat-moment-rpc/internal/model"
 	"github.com/xh-polaris/meowchat-moment-rpc/internal/svc"
 	"github.com/xh-polaris/meowchat-moment-rpc/pb"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +26,31 @@ func NewUpdateMomentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upda
 }
 
 func (l *UpdateMomentLogic) UpdateMoment(in *pb.UpdateMomentReq) (*pb.UpdateMomentResp, error) {
-	// todo: add your logic here and delete this line
+	m := in.Moment
+	momentId, err := primitive.ObjectIDFromHex(m.Id)
+	userId, err := primitive.ObjectIDFromHex(m.UserId)
+	communityId, err := primitive.ObjectIDFromHex(m.CommunityId)
+	if err != nil {
+		return nil, errorx.ErrInvalidObjectId
+	}
+	catId, err := primitive.ObjectIDFromHex(m.CatId)
+	if err != nil {
+		catId = primitive.NilObjectID
+	}
+
+	err = l.svcCtx.MomentModel.UpdateValid(l.ctx, &model.Moment{
+		ID:          momentId,
+		CatId:       catId,
+		CommunityId: communityId,
+		Photos:      m.Photos,
+		Title:       m.Title,
+		Text:        m.Text,
+		UserId:      userId,
+		IsDeleted:   false,
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return &pb.UpdateMomentResp{}, nil
 }
