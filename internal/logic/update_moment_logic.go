@@ -28,7 +28,13 @@ func NewUpdateMomentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upda
 func (l *UpdateMomentLogic) UpdateMoment(in *pb.UpdateMomentReq) (*pb.UpdateMomentResp, error) {
 	m := in.Moment
 	momentId, err := primitive.ObjectIDFromHex(m.Id)
+	if err != nil {
+		return nil, errorx.ErrInvalidObjectId
+	}
 	userId, err := primitive.ObjectIDFromHex(m.UserId)
+	if err != nil {
+		return nil, errorx.ErrInvalidObjectId
+	}
 	communityId, err := primitive.ObjectIDFromHex(m.CommunityId)
 	if err != nil {
 		return nil, errorx.ErrInvalidObjectId
