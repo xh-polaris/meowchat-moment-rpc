@@ -86,6 +86,6 @@ func (m *defaultMomentModel) FindManyValid(ctx context.Context, communityId stri
 func (m *defaultMomentModel) UpdateValid(ctx context.Context, data *Moment) error {
 	data.UpdateAt = time.Now()
 	key := prefixMomentCacheKey + data.ID.Hex()
-	_, err := m.conn.ReplaceOne(ctx, key, bson.M{"_id": data.ID, "isDelete": false}, data)
+	_, err := m.conn.ReplaceOne(ctx, key, bson.M{"_id": data.ID, "isDeleted": false}, data)
 	return err
 }

@@ -41,7 +41,13 @@ func (l *CreateMomentLogic) CreateMoment(in *pb.CreateMomentReq) (*pb.CreateMome
 		data.CatId = primitive.NilObjectID
 	}
 	data.CatId = catId
-	err = l.svcCtx.MomentModel.Insert(context.Background(), data)
+	communityId, err := primitive.ObjectIDFromHex(m.CommunityId)
+	if err != nil {
+		return nil, err
+	}
+	data.CommunityId = communityId
+
+	err = l.svcCtx.MomentModel.Insert(l.ctx, data)
 	if err != nil {
 		return nil, err
 	}

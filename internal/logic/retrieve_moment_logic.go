@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/xh-polaris/meowchat-moment-rpc/errorx"
+	"github.com/xh-polaris/meowchat-moment-rpc/internal/model"
 
 	"github.com/xh-polaris/meowchat-moment-rpc/internal/svc"
 	"github.com/xh-polaris/meowchat-moment-rpc/pb"
@@ -25,7 +27,11 @@ func NewRetrieveMomentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Re
 
 func (l *RetrieveMomentLogic) RetrieveMoment(in *pb.RetrieveMomentReq) (*pb.RetrieveMomentResp, error) {
 	data, err := l.svcCtx.MomentModel.FindOneValid(l.ctx, in.MomentId)
-	if err != nil {
+	switch err {
+	case nil:
+	case model.ErrNotFound:
+		return nil, errorx.ErrNoSuchMoment
+	default:
 		return nil, err
 	}
 	m := &pb.Moment{

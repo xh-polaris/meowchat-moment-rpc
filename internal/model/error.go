@@ -1,12 +1,11 @@
 package model
 
 import (
-	"errors"
-
+	"github.com/xh-polaris/meowchat-moment-rpc/errorx"
 	"github.com/zeromicro/go-zero/core/stores/mon"
 )
 
 var (
 	ErrNotFound        = mon.ErrNotFound
-	ErrInvalidObjectId = errors.New("invalid objectId")
+	ErrInvalidObjectId = errorx.ErrInvalidObjectId
 )
