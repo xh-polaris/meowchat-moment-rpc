@@ -6,9 +6,8 @@ import (
 	"github.com/xh-polaris/meowchat-moment-rpc/internal/model"
 	"github.com/xh-polaris/meowchat-moment-rpc/internal/svc"
 	"github.com/xh-polaris/meowchat-moment-rpc/pb"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type UpdateMomentLogic struct {
@@ -31,27 +30,15 @@ func (l *UpdateMomentLogic) UpdateMoment(in *pb.UpdateMomentReq) (*pb.UpdateMome
 	if err != nil {
 		return nil, errorx.ErrInvalidObjectId
 	}
-	userId, err := primitive.ObjectIDFromHex(m.UserId)
-	if err != nil {
-		return nil, errorx.ErrInvalidObjectId
-	}
-	communityId, err := primitive.ObjectIDFromHex(m.CommunityId)
-	if err != nil {
-		return nil, errorx.ErrInvalidObjectId
-	}
-	catId, err := primitive.ObjectIDFromHex(m.CatId)
-	if err != nil {
-		catId = primitive.NilObjectID
-	}
 
 	err = l.svcCtx.MomentModel.UpdateValid(l.ctx, &model.Moment{
 		ID:          momentId,
-		CatId:       catId,
-		CommunityId: communityId,
+		CatId:       m.CatId,
+		CommunityId: m.CommunityId,
 		Photos:      m.Photos,
 		Title:       m.Title,
 		Text:        m.Text,
-		UserId:      userId,
+		UserId:      m.UserId,
 		IsDeleted:   false,
 	})
 	if err != nil {

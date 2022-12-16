@@ -36,11 +36,9 @@ func (l *ListMomentLogic) ListMoment(in *pb.ListMomentReq) (*pb.ListMomentResp, 
 			Photos:      d.Photos,
 			Title:       d.Title,
 			Text:        d.Text,
-			UserId:      d.UserId.Hex(),
-			CommunityId: d.CommunityId.Hex(),
-		}
-		if !d.CatId.IsZero() {
-			m.CatId = d.CatId.Hex()
+			UserId:      d.UserId,
+			CommunityId: d.CommunityId,
+			CatId:       d.CatId,
 		}
 		res = append(res, m)
 	}

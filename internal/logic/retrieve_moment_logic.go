@@ -40,11 +40,9 @@ func (l *RetrieveMomentLogic) RetrieveMoment(in *pb.RetrieveMomentReq) (*pb.Retr
 		Photos:      data.Photos,
 		Title:       data.Title,
 		Text:        data.Text,
-		UserId:      data.UserId.Hex(),
-		CommunityId: data.CommunityId.Hex(),
-	}
-	if !data.CatId.IsZero() {
-		m.CatId = data.CatId.Hex()
+		UserId:      data.UserId,
+		CommunityId: data.CommunityId,
+		CatId:       data.CatId,
 	}
 	return &pb.RetrieveMomentResp{Moment: m}, nil
 }

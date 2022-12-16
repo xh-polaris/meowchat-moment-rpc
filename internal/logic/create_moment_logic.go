@@ -5,8 +5,6 @@ import (
 	"github.com/xh-polaris/meowchat-moment-rpc/internal/model"
 	"github.com/xh-polaris/meowchat-moment-rpc/internal/svc"
 	"github.com/xh-polaris/meowchat-moment-rpc/pb"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -31,23 +29,8 @@ func (l *CreateMomentLogic) CreateMoment(in *pb.CreateMomentReq) (*pb.CreateMome
 		Title:  m.Title,
 		Text:   m.Text,
 	}
-	userId, err := primitive.ObjectIDFromHex(m.UserId)
-	if err != nil {
-		return nil, err
-	}
-	data.UserId = userId
-	catId, err := primitive.ObjectIDFromHex(m.CatId)
-	if err != nil {
-		data.CatId = primitive.NilObjectID
-	}
-	data.CatId = catId
-	communityId, err := primitive.ObjectIDFromHex(m.CommunityId)
-	if err != nil {
-		return nil, err
-	}
-	data.CommunityId = communityId
 
-	err = l.svcCtx.MomentModel.Insert(l.ctx, data)
+	err := l.svcCtx.MomentModel.Insert(l.ctx, data)
 	if err != nil {
 		return nil, err
 	}
