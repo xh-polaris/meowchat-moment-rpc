@@ -5,7 +5,12 @@ Log:
   Encoding: plain
   Level: debug
 Mongo:
-  URL: $MONGO_URL
-  DB: $MONGO_DB
+  URL: mongo://root:password@127.0.0.1:27017
+  DB: db
 Cache:
-  - Host: $CACHE_HOST
+  - Host: 127.0.0.1:6379
+Elasticsearch:
+  Addresses:
+    - https://127.0.0.1:9200
+  Username: elastic
+  Password: password

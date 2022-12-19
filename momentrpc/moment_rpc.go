@@ -22,10 +22,13 @@ type (
 	Moment             = pb.Moment
 	RetrieveMomentReq  = pb.RetrieveMomentReq
 	RetrieveMomentResp = pb.RetrieveMomentResp
+	SearchMomentReq    = pb.SearchMomentReq
+	SearchMomentResp   = pb.SearchMomentResp
 	UpdateMomentReq    = pb.UpdateMomentReq
 	UpdateMomentResp   = pb.UpdateMomentResp
 
 	MomentRpc interface {
+		SearchMoment(ctx context.Context, in *SearchMomentReq, opts ...grpc.CallOption) (*SearchMomentResp, error)
 		ListMoment(ctx context.Context, in *ListMomentReq, opts ...grpc.CallOption) (*ListMomentResp, error)
 		RetrieveMoment(ctx context.Context, in *RetrieveMomentReq, opts ...grpc.CallOption) (*RetrieveMomentResp, error)
 		CreateMoment(ctx context.Context, in *CreateMomentReq, opts ...grpc.CallOption) (*CreateMomentResp, error)
@@ -42,6 +45,11 @@ func NewMomentRpc(cli zrpc.Client) MomentRpc {
 	return &defaultMomentRpc{
 		cli: cli,
 	}
+}
+
+func (m *defaultMomentRpc) SearchMoment(ctx context.Context, in *SearchMomentReq, opts ...grpc.CallOption) (*SearchMomentResp, error) {
+	client := pb.NewMomentRpcClient(m.cli.Conn())
+	return client.SearchMoment(ctx, in, opts...)
 }
 
 func (m *defaultMomentRpc) ListMoment(ctx context.Context, in *ListMomentReq, opts ...grpc.CallOption) (*ListMomentResp, error) {

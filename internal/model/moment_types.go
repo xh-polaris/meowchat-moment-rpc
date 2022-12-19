@@ -7,7 +7,7 @@ import (
 )
 
 type Moment struct {
-	ID          primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	ID          primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
 	CatId       string             `bson:"catId,omitempty"`
 	CommunityId string             `bson:"communityId"`
 	Photos      []string           `bson:"photos"`

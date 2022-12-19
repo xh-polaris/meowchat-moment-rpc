@@ -22,6 +22,11 @@ func NewMomentRpcServer(svcCtx *svc.ServiceContext) *MomentRpcServer {
 	}
 }
 
+func (s *MomentRpcServer) SearchMoment(ctx context.Context, in *pb.SearchMomentReq) (*pb.SearchMomentResp, error) {
+	l := logic.NewSearchMomentLogic(ctx, s.svcCtx)
+	return l.SearchMoment(in)
+}
+
 func (s *MomentRpcServer) ListMoment(ctx context.Context, in *pb.ListMomentReq) (*pb.ListMomentResp, error) {
 	l := logic.NewListMomentLogic(ctx, s.svcCtx)
 	return l.ListMoment(in)

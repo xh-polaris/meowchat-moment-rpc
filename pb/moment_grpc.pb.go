@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MomentRpcClient interface {
+	SearchMoment(ctx context.Context, in *SearchMomentReq, opts ...grpc.CallOption) (*SearchMomentResp, error)
 	ListMoment(ctx context.Context, in *ListMomentReq, opts ...grpc.CallOption) (*ListMomentResp, error)
 	RetrieveMoment(ctx context.Context, in *RetrieveMomentReq, opts ...grpc.CallOption) (*RetrieveMomentResp, error)
 	CreateMoment(ctx context.Context, in *CreateMomentReq, opts ...grpc.CallOption) (*CreateMomentResp, error)
@@ -35,6 +36,15 @@ type momentRpcClient struct {
 
 func NewMomentRpcClient(cc grpc.ClientConnInterface) MomentRpcClient {
 	return &momentRpcClient{cc}
+}
+
+func (c *momentRpcClient) SearchMoment(ctx context.Context, in *SearchMomentReq, opts ...grpc.CallOption) (*SearchMomentResp, error) {
+	out := new(SearchMomentResp)
+	err := c.cc.Invoke(ctx, "/moment.moment_rpc/SearchMoment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *momentRpcClient) ListMoment(ctx context.Context, in *ListMomentReq, opts ...grpc.CallOption) (*ListMomentResp, error) {
@@ -86,6 +96,7 @@ func (c *momentRpcClient) DeleteMoment(ctx context.Context, in *DeleteMomentReq,
 // All implementations must embed UnimplementedMomentRpcServer
 // for forward compatibility
 type MomentRpcServer interface {
+	SearchMoment(context.Context, *SearchMomentReq) (*SearchMomentResp, error)
 	ListMoment(context.Context, *ListMomentReq) (*ListMomentResp, error)
 	RetrieveMoment(context.Context, *RetrieveMomentReq) (*RetrieveMomentResp, error)
 	CreateMoment(context.Context, *CreateMomentReq) (*CreateMomentResp, error)
@@ -98,6 +109,9 @@ type MomentRpcServer interface {
 type UnimplementedMomentRpcServer struct {
 }
 
+func (UnimplementedMomentRpcServer) SearchMoment(context.Context, *SearchMomentReq) (*SearchMomentResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchMoment not implemented")
+}
 func (UnimplementedMomentRpcServer) ListMoment(context.Context, *ListMomentReq) (*ListMomentResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListMoment not implemented")
 }
@@ -124,6 +138,24 @@ type UnsafeMomentRpcServer interface {
 
 func RegisterMomentRpcServer(s grpc.ServiceRegistrar, srv MomentRpcServer) {
 	s.RegisterService(&MomentRpc_ServiceDesc, srv)
+}
+
+func _MomentRpc_SearchMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchMomentReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MomentRpcServer).SearchMoment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/moment.moment_rpc/SearchMoment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MomentRpcServer).SearchMoment(ctx, req.(*SearchMomentReq))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _MomentRpc_ListMoment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -223,6 +255,10 @@ var MomentRpc_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "moment.moment_rpc",
 	HandlerType: (*MomentRpcServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SearchMoment",
+			Handler:    _MomentRpc_SearchMoment_Handler,
+		},
 		{
 			MethodName: "ListMoment",
 			Handler:    _MomentRpc_ListMoment_Handler,
