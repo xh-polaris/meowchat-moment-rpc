@@ -61,7 +61,7 @@ func (m *defaultMomentModel) FindOne(ctx context.Context, id string) (*Moment, e
 func (m *defaultMomentModel) Update(ctx context.Context, data *Moment) error {
 	data.UpdateAt = time.Now()
 	key := prefixMomentCacheKey + data.ID.Hex()
-	_, err := m.conn.ReplaceOne(ctx, key, bson.M{"_id": data.ID}, data)
+	_, err := m.conn.UpdateByID(ctx, key, data.ID, bson.M{"$set": data})
 	return err
 }
 

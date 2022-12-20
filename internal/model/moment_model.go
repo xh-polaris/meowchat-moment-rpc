@@ -110,7 +110,7 @@ func (m *customMomentModel) FindManyValid(ctx context.Context, communityId strin
 func (m *customMomentModel) UpdateValid(ctx context.Context, data *Moment) error {
 	data.UpdateAt = time.Now()
 	key := prefixMomentCacheKey + data.ID.Hex()
-	_, err := m.conn.ReplaceOne(ctx, key, bson.M{"_id": data.ID, "isDeleted": false}, data)
+	_, err := m.conn.UpdateOne(ctx, key, bson.M{"_id": data.ID, "isDeleted": false}, bson.M{"$set": data})
 	return err
 }
 
